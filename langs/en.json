@@ -1,0 +1,30 @@
+{
+	"header": {
+		"yourmeal": "Your Meal",
+		"mainTitleOne": "Only the",
+		"mainTitleTwo": "juiciest burgers",
+		"delivery": "Free delivery from",
+		"freedelivery": "Free delivery",
+		"busket": "Busket",
+		"total": "In total",
+		"dorder": "Place an order",
+		"number":"Phone number for an order",
+		"social": "Us on social media",
+		"add": "Add",
+		"composition":"Composition",
+		"cheese": "cheese",
+		"description": "Super meaty delight! A large cutlet of fresh beef will captivate you with its juiciness, and crispy lettuce leaves will add freshness.",
+		"meatbomb": "Meat Bomb"
+	},
+	"categories": {
+		"burger": "Burgers",
+		"snacks": "Snacks",
+		"hotdogs": "Hot-dogs",
+		"combo": "Combo",
+		"kebab": "Kebab",
+		"pizza": "Pizza",
+		"vok": "Vok",
+		"desserts": "Desserts",
+		"sauce": "Sauce"
+	}
+}
