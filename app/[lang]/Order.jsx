@@ -2,7 +2,7 @@ export default function Order() { //{name,weight,price,amount}
     return (
         <div className="w-full h-[84px] flex py-[16px] justify-between">
             <div className="flex gap-[6px]">
-                <img src="/images/burgerSuperCheese.png" alt="SuperCheese" className="w-[64px] h-full rounded-[8px]" />
+                <img src="/images/burgerSuperCheese.png" alt="SuperCheese" className="w-[64px] h-full rounded-[8px] object-cover" />
                 <div className="flex flex-col h-full w-auto justify-between">
                     <p className="text-[12px] font-nunito">Супер сырный</p>
                     <p className="text-[#B1B1B1] text-[12px] font-nunito">512г</p>
