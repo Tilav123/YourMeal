@@ -1,4 +1,4 @@
-export default function Order() { //{name,weight,price,amount}
+export default function Order({order}) {
     return (
         <div className="w-full h-[84px] flex py-[16px] justify-between">
             <div className="flex gap-[6px]">

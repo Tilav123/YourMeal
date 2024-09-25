@@ -1,11 +1,24 @@
 'use client';
 import { useState } from "react";
+import { useEffect } from 'react';
+import { useParams } from "next/navigation";
 import Product from "./Product";
-export default function Modal({translation}:any) {
+export default function Modal({ translation }: any) {
     let [isModalOpen, setOpen] = useState(false)
-    function openModal(){
+    function openModal() {
         setOpen(true)
     }
+    const { id } = useParams();
+    let [data, setData] = useState()
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('/api/menu');
+            const result = await response.json();
+            console.log(result);
+            setData(result);
+        };
+        fetchData();
+    }, []);
     return (
         <div>
             <div className={`fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 ${isModalOpen ? 'block' : 'hidden'}`}>
@@ -46,16 +59,13 @@ export default function Modal({translation}:any) {
                 </div>
             </div>
             <div className="flex flex-col gap-[24px]">
-                <p className="font-nunito font-semibold text-[40px]">{translation.categories.burger}</p>
+                <p className="font-nunito font-semibold text-[40px]">{id}</p>
                 <div className="flex flex-wrap gap-[30px]">
-                    <Product func={openModal} translation={translation}/>
-                    <Product func={openModal} translation={translation}/>
-                    <Product func={openModal} translation={translation}/>
-                    <Product func={openModal} translation={translation}/>
-                    <Product func={openModal} translation={translation}/>
-                    <Product func={openModal} translation={translation}/>
-                    <Product func={openModal} translation={translation}/>
-                    <Product func={openModal} translation={translation}/>
+                    {data
+                        ?.filter((item: any) => item.text.category === id)
+                        .map((item: any, index: any) => (
+                            <Product func={openModal} translation={translation} arr={item.text}/>
+                        ))}
                 </div>
             </div>
         </div>

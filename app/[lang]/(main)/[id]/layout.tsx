@@ -1,15 +1,28 @@
-import "./globals.css";
-import Category from "./Category";
-import { getDictionary } from "./dictionaries";
-import Order from "./Order";
+import '../../globals.css';
+import Category from "../../Category";
+import { getDictionary } from "../../dictionaries";
+import Order from '../Order'
 export default async function RootLayout({
   children,
-  params: { lang },
+  params: { lang, pageId }
 }: Readonly<{
   children: React.ReactNode;
-  params: { lang: string };
+  params: { lang: string, pageId: string };
 }>) {
   const translation = await getDictionary(lang);
+  let result = [];
+  try {
+    console.log(pageId);
+    const response = await fetch('/api/menu');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    result = await response.json();
+    console.log(result);
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+
   return (
     <html lang={lang}>
       <head>
@@ -22,7 +35,7 @@ export default async function RootLayout({
           <div className="w-[2880px] h-[2880px] bg-[#FFAB08] rounded-full absolute z-[-1] top-[-2414px] left-[50%] translate-x-[-50%] max-[768px]:w-[911px] max-[768px]:h-[911px] max-[768px]:top-[-222px]"></div>
           <header className="w-full flex items-center justify-center pt-[24px]">
             <a href=""> <img src="/images/logo.png" className="h-[33.3px] w-auto cursor-pointer" /> </a>
-          </header> 
+          </header>
           <div className="flex items-center gap-[21px] justify-center mb-[103px] max-[768px]:flex-col-reverse max-[768px]:mb-[163px]">
             <div className="w-[326px] h-[326px] burger relative">
               <img src="/images/TopBread.png" alt="TopBread" className="topBread absolute w-[205px] h-[150px] left-[45px] top-[26.7px] z-[6]" />
@@ -39,15 +52,15 @@ export default async function RootLayout({
             </div>
           </div>
           <div className="flex gap-[24px] flex-wrap mb-[50px] m-auto w-fit">
-            <Category name={translation.categories.burger} imgName={"burgers"} active={true}></Category>
-            <Category name={translation.categories.snacks} imgName={"snacks"} active={false}></Category>
-            <Category name={translation.categories.hotdogs} imgName={"hotdogs"} active={false}></Category>
-            <Category name={translation.categories.combo} imgName={"combo"} active={false}></Category>
-            <Category name={translation.categories.kebab} imgName={"kebab"} active={false}></Category>
-            <Category name={translation.categories.pizza} imgName={"pizza"} active={false}></Category>
-            <Category name={translation.categories.vok} imgName={"Vok"} active={false}></Category>
-            <Category name={translation.categories.desserts} imgName={"desserts"} active={false}></Category>
-            <Category name={translation.categories.sauce} imgName={"sauce"} active={false}></Category>
+            <Category name={translation.categories.burger} imgName={"burgers"} active={pageId == "burgers" ? true : false}></Category>
+            <Category name={translation.categories.snacks} imgName={"snacks"} active={pageId == "snacks" ? true : false}></Category>
+            <Category name={translation.categories.hotdogs} imgName={"hotdogs"} active={pageId == "hotdogs" ? true : false}></Category>
+            <Category name={translation.categories.combo} imgName={"combo"} active={pageId == "combo" ? true : false}></Category>
+            <Category name={translation.categories.kebab} imgName={"kebab"} active={pageId == "kebab" ? true : false}></Category>
+            <Category name={translation.categories.pizza} imgName={"pizza"} active={pageId == "pizza" ? true : false}></Category>
+            <Category name={translation.categories.vok} imgName={"vok"} active={pageId == "vok" ? true : false}></Category>
+            <Category name={translation.categories.desserts} imgName={"desserts"} active={pageId == "desserts" ? true : false}></Category>
+            <Category name={translation.categories.sauce} imgName={"sauce"} active={pageId == "sauce" ? true : false}></Category>
           </div>
           <div className="w-[1290px] m-auto pb-[100px] max-[1300px]:w-full contr mb-[100px]">
             <div className="flex gap-[30px] h-auto blockt">
@@ -58,9 +71,11 @@ export default async function RootLayout({
                     <button className="py-[2px] px-[16px] bg-[#F2F2F3] font-nunito text-[12px] rounded-[6px]">4</button>
                   </div>
                   <div className="flex flex-col mb-[16px]">
-                    <Order></Order>
-                    <Order></Order>
-                    <Order></Order>
+                    {result
+                      ?.filter((item: any) => item.text.category === pageId)
+                      .map((item: any, index: any) => (
+                        <Order key={index} order={item} />
+                      ))}
                   </div>
                   <div className="flex justify-between items-center mb-[24px]">
                     <p className="font-nunito">{translation.header.total}</p>
