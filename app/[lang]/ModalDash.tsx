@@ -80,9 +80,10 @@ export default function ModalDash({
 
       const imageData = await response.json();
       const image = imageData.data.replace(/.*(\/|\\)images/, '/images').replace(/\\/g, '/');
-      console.log(image);
+      const imaged = image.startsWith('/images') ? image : `/images/${image}`;
+      console.log(imaged);
       
-      const updatedData = { ...data, imageUrl: image };
+      const updatedData = { ...data, imageUrl: imaged };
 
       func(updatedData);
       reset();
