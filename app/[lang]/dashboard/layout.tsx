@@ -1,4 +1,3 @@
-// components/Layout.js
 import "../globals.css";
 import Link from 'next/link';
 import { getDictionary } from '../dictionaries';

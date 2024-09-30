@@ -1,5 +1,5 @@
 import { getDictionary } from "../../dictionaries";
-import Modal from "../../Modal";
+import Modal from '../../Modal'
 export default async function Home({
   params: { lang },
 }: {
