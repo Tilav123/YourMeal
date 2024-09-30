@@ -4,7 +4,7 @@ const nextConfig = {
       return [
         {
           source: '/',
-          destination: '/66f5c9552fcd83a8f18babc8',
+          destination: '/burgers',
           permanent: true, 
         },
       ];
